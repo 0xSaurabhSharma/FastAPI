@@ -16,7 +16,7 @@ async def create_item(item: ItemCreate):
     return new_item
 
 @router.get("/{item_id}", response_model=ItemResponse)
-async def get_item(item_id: int = Path(..., gt=0, description="Item ID must be positive")):
+async def get_item_by_id(item_id: int = Path(..., gt=0, description="Item ID must be positive")):
     """Fetch an item by ID."""
     item = next((item for item in fake_db if item["id"] == item_id), None)
     print('get/items/id')
@@ -25,7 +25,7 @@ async def get_item(item_id: int = Path(..., gt=0, description="Item ID must be p
     return item
 
 @router.get("/searchh/")
-async def search_item(name: str = Query(..., min_length=3, description="Search tearm must be at least 3 character long")):
+async def search_item_by_name(name: str = Query(..., min_length=3, description="Search tearm must be at least 3 character long")):
     """Search item by name"""
     res = [item for item in fake_db if (name.lower() == item["name"].lower())]
     return res or {"message": "No Item Found"}
